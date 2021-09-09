@@ -12,6 +12,9 @@ $(document).ready(function() {
 
 });
 
+var config_editer;
+var domain_editer;
+
 function load_domains() {
     $.when(fetch_html('api/domains')).then(function() {
         $('#domain').hide();
@@ -51,7 +54,7 @@ function enable_domain(name, enable) {
 }
 
 function update_domain(name) {
-    var _file = $('#file-content').val();
+    var _file = domain_editer.getValue();
     $('#dimmer').addClass('active');
 
     $.ajax({
@@ -76,6 +79,12 @@ function fetch_domain(name) {
         response.text().then(function(text) {
             $('#domain').html(text).fadeIn();
             $('#domain_cards').hide();
+            domain_editer = CodeMirror.fromTextArea($('#file-content')[0], {
+                mode: 'text/x-nginx-conf',
+                lineNumbers: true,
+                lineWrapping: true,
+                extraKeys: {"Ctrl-S": function(cm){ update_domain(name) }},
+            });
         });
     })
     .catch(function(error) {
@@ -116,7 +125,7 @@ function fetch_html(url) {
 }
 
 function update_config(name) {
-    var _file = $('#file-content').val();
+    var _file = config_editer.getValue();
     $('#dimmer').addClass('active');
 
     $.ajax({
@@ -146,6 +155,12 @@ function load_config(name) {
     .then(function(response) {
         response.text().then(function(text) {
             $('#content').html(text);
+            config_editer = CodeMirror.fromTextArea($('#file-content')[0], {
+                mode: 'text/x-nginx-conf',
+                lineNumbers: true,
+                lineWrapping: true,
+                extraKeys: {"Ctrl-S": function(cm){ update_config(name) }},
+            });
         });
     })
     .catch(function(error) {
