@@ -12,7 +12,7 @@
         <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='moment-with-locales.min.js') }}"></script>
         <script>
-            moment.locale("en");
+            moment.locale("zh-cn");
             function flask_moment_render(elem) {
                 $(elem).text(eval('moment("' + $(elem).data('timestamp') + '").' + $(elem).data('format') + ';'));
                 $(elem).removeClass('flask-moment').show();
@@ -62,7 +62,7 @@
                     <div class="ui action input">
                         <input type="text" placeholder="example.com" id="add_domain">
                         <button class="ui green button" onclick="add_domain()" tabindex="0">
-                            Add
+                            添加
                         </button>
                     </div>
                 </div>

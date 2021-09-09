@@ -1,26 +1,33 @@
 <div class="ui top attached segment">
     <div class="ui two column grid">
         <div class="column">
-            <h1 class="ui header">{{ name }}</h1>
+            <h1 class="ui header">
+                {{ name }}
+                {% if enabled %}
+                <i class="circle green icon" style="font-size: 36px;"></i>
+                {% else %}
+                <i class="circle outline grey icon" style="font-size: 36px;"></i>
+                {% endif %}
+            </h1>
         </div>
 
         <div class="column">
             <div class="ui right floated buttons">
                 <button class="ui right floated labeled icon button" onclick="update_domain('{{ name }}')">
-                    <i class="play icon"></i>Apply
+                    <i class="play icon"></i>保存
                 </button>
 
                 <button class="ui right floated labeled icon button" onclick="remove_domain('{{ name }}')">
-                    <i class="trash icon"></i>Remove
+                    <i class="trash icon"></i>删除
                 </button>
 
                 {% if enabled %}
                 <button class="ui right floated labeled icon button" onclick="enable_domain('{{ name }}', false)">
-                    <i class="circle middle aligned outline grey icon"></i>Disable
+                    <i class="circle middle aligned outline grey icon"></i>禁用
                 </button>
                 {% else %}
                 <button class="ui right floated labeled icon button" onclick="enable_domain('{{ name }}', true)">
-                    <i class="circle middle aligned green icon"></i>Enable
+                    <i class="circle middle aligned green icon"></i>启用
                 </button>
                 {% endif %}
             </div>

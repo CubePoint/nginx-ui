@@ -85,7 +85,7 @@ function fetch_domain(name) {
 }
 
 function remove_domain(name) {
-
+    if (!window.confirm('确认删除吗？')) return;
     $.ajax({
         type: 'DELETE',
         url: '/api/domain/' + name,
