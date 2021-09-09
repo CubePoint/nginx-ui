@@ -9,8 +9,26 @@
         <title>Nginx UI</title>
         <link rel="icon" type="image/png" href="{{ url_for('static', filename='nginx.ico') }}" sizes="48x48">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='semantic.min.css') }}">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
-        {{ moment.include_moment() }}
+        <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='moment-with-locales.min.js') }}"></script>
+        <script>
+            moment.locale("en");
+            function flask_moment_render(elem) {
+                $(elem).text(eval('moment("' + $(elem).data('timestamp') + '").' + $(elem).data('format') + ';'));
+                $(elem).removeClass('flask-moment').show();
+            }
+            function flask_moment_render_all() {
+                $('.flask-moment').each(function() {
+                    flask_moment_render(this);
+                    if ($(this).data('refresh')) {
+                        (function(elem, interval) { setInterval(function() { flask_moment_render(elem) }, interval); })(this, $(this).data('refresh'));
+                    }
+                })
+            }
+            $(document).ready(function() {
+                flask_moment_render_all();
+            });
+        </script>
         <script src="{{ url_for('static', filename='semantic.min.js') }}"></script>
         <script src="{{ url_for('static', filename='custom.min.js') }}"></script>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='custom.css') }}">
