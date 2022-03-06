@@ -102,7 +102,7 @@ def get_domain(name: str):
     for _ in os.listdir(config_path):
 
         if os.path.isfile(os.path.join(config_path, _)):
-            if _.startswith(name):
+            if _.startswith(name + '.conf'):
                 domain, state = _.rsplit('.', 1)
 
                 if state == 'disabled':
@@ -157,7 +157,7 @@ def delete_domain(name: str):
     for _ in os.listdir(config_path):
 
         if os.path.isfile(os.path.join(config_path, _)):
-            if _.startswith(name):
+            if _.startswith(name + '.conf'):
                 os.remove(os.path.join(config_path, _))
                 removed = not os.path.exists(os.path.join(config_path, _))
                 break
@@ -184,7 +184,7 @@ def put_domain(name: str):
     for _ in os.listdir(config_path):
 
         if os.path.isfile(os.path.join(config_path, _)):
-            if _.startswith(name):
+            if _.startswith(name + '.conf'):
                 with io.open(os.path.join(config_path, _), 'w') as f:
                     f.write(content['file'])
 
@@ -207,7 +207,7 @@ def enable_domain(name: str):
     for _ in os.listdir(config_path):
 
         if os.path.isfile(os.path.join(config_path, _)):
-            if _.startswith(name):
+            if _.startswith(name + '.conf'):
                 if content['enable']:
                     new_filename, disable = _.rsplit('.', 1)
                     os.rename(os.path.join(config_path, _), os.path.join(config_path, new_filename))
