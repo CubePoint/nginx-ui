@@ -16,7 +16,7 @@ var config_editer;
 var domain_editer;
 
 function load_domains() {
-    $.when(fetch_html('api/domains')).then(function() {
+    $.when(fetch_html('./api/domains')).then(function() {
         $('#domain').hide();
         $('#domain_cards').fadeIn();
     });
@@ -28,7 +28,7 @@ function add_domain() {
 
     $.ajax({
         type: 'POST',
-        url: '/api/domain/' + name,
+        url: './api/domain/' + name,
         statusCode: {
             201: function() { fetch_domain(name) }
         }
@@ -40,7 +40,7 @@ function enable_domain(name, enable) {
 
     $.ajax({
         type: 'POST',
-        url: '/api/domain/' + name + '/enable',
+        url: './api/domain/' + name + '/enable',
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         data: JSON.stringify({
@@ -59,7 +59,7 @@ function update_domain(name) {
 
     $.ajax({
         type: 'PUT',
-        url: '/api/domain/' + name,
+        url: './api/domain/' + name,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         data: JSON.stringify({
@@ -74,7 +74,7 @@ function update_domain(name) {
 
 function fetch_domain(name) {
 
-    fetch('api/domain/' + name)
+    fetch('./api/domain/' + name)
     .then(function(response) {
         response.text().then(function(text) {
             $('#domain').html(text).fadeIn();
@@ -97,7 +97,7 @@ function remove_domain(name) {
     if (!window.confirm('确认删除吗？')) return;
     $.ajax({
         type: 'DELETE',
-        url: '/api/domain/' + name,
+        url: './api/domain/' + name,
         statusCode: {
             200: function() {
                 load_domains();
@@ -130,7 +130,7 @@ function update_config(name) {
 
     $.ajax({
         type: 'POST',
-        url: '/api/config/' + name,
+        url: './api/config/' + name,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         data: JSON.stringify({
@@ -151,7 +151,7 @@ function update_config(name) {
 
 function load_config(name) {
 
-    fetch('api/config/' + name)
+    fetch('./api/config/' + name)
     .then(function(response) {
         response.text().then(function(text) {
             $('#content').html(text);
